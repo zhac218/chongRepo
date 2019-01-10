@@ -1,0 +1,48 @@
+Ping Identity Interview: Take Home Coding Exercise
+
+System Requirements
+-------------------------------------------------------------------------------
+-Java 1.7 or 1.8
+-Maven (any recent version)
+-Eclipse, IntelliJ or another IDE
+
+Package Contents
+-------------------------------------------------------------------------------
+- This instructions file
+- Maven project
+- settings.xml file
+
+The Exercise
+-------------------------------------------------------------------------------
+The target application for this exercise is "Remember The Milk": https://www.rememberthemilk.com/app/
+
+Sign up for a free account there using your email, and then have a look at how the application functions. 
+
+Objectives
+-------------------------------------------------------------------------------
+Add test automation for the following functions using Java and Selenium:
+- Authentication
+- Create, Read, Update, Delete tasks
+
+When developing the test suite, try to treat this as an actual test suite that would be used daily by your team.
+- develop the suite so that it's easy to maintain and easy to add additional test cases to
+- feel free to organize the test suite in any way you feel is best
+- feel free to include any open source libraries that can help in your test case development
+
+Setup Maven Project
+-------------------------------------------------------------------------------
+In order to start working with the project, first you need to install Maven.
+
+After Maven is installed, you need to modify or overwrite Maven's settings.xml to include 2 repositories. 
+A settings.xml file with the 2 repositories has been included.
+
+Next, in command line go the root of the RTMTestSuite directory and perform the following commands:
+mvn clean install
+mvn eclipse:eclipse
+
+Now you can open up Eclipse and import the maven project.
+
+Sample Test Case
+ -------------------------------------------------------------------------------
+Inside of TestRTM.java there is a sample test case called testLoginPageLoaded() which loads the login page for RTM and verifies the title. 
+This test is only a sample, you do not have to follow its format for your additional test cases.
