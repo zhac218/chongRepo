@@ -44,5 +44,5 @@ Now you can open up Eclipse and import the maven project.
 
 Sample Test Case
  -------------------------------------------------------------------------------
-Inside of TestRTM.java there is a sample test case called testLoginPageLoaded() which loads the login page for RTM and verifies the title. 
+Inside of TestRTMLogin.java there is a sample test case called testLoginPageLoaded() which loads the login page for RTM and verifies the title. 
 This test is only a sample, you do not have to follow its format for your additional test cases.
