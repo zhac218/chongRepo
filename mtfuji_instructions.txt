@@ -20,11 +20,12 @@ Sign up for a free account there using your email, and then have a look at how t
 
 Objectives
 -------------------------------------------------------------------------------
-Add test automation for the following functions using Java and Selenium:
+Come up with test cases for the following areas and add test automation using Java and Selenium:
 - Authentication
 - Create, Read, Update, Delete tasks
 
 When developing the test suite, try to treat this as an actual test suite that would be used daily by your team.
+- automate as many tests as possible; if there are tests that cannot be automated due to time constraint feel free to write up the test scenarios and attach them to your response
 - develop the suite so that it's easy to maintain and easy to add additional test cases to
 - feel free to organize the test suite in any way you feel is best
 - feel free to include any open source libraries that can help in your test case development
