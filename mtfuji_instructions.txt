@@ -25,7 +25,8 @@ Come up with test cases for the following areas and add test automation using Ja
 - Create, Read, Update, Delete tasks
 
 When developing the test suite, try to treat this as an actual test suite that would be used daily by your team.
-- automate as many tests as possible; if there are tests that cannot be automated due to time constraint feel free to write up the test scenarios and attach them to your response
+- automate as many tests as possible
+- if there are tests that cannot be automated due to time constraint or complexity, feel free to write up the test cases and attach them to your response
 - develop the suite so that it's easy to maintain and easy to add additional test cases to
 - feel free to organize the test suite in any way you feel is best
 - feel free to include any open source libraries that can help in your test case development
