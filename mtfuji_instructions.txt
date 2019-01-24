@@ -20,7 +20,7 @@ Sign up for a free account there using your email, and then have a look at how t
 
 Objectives
 -------------------------------------------------------------------------------
-Come up with test cases for the following areas and add test automation using Java and Selenium:
+Come up with test cases for the following areas and add test automation using Java, JUnit and Selenium:
 - Authentication
 - Create, Read, Update, Delete tasks
 
