@@ -1,12 +1,9 @@
 package com.pingidentity.businessworkflow;
 import com.pingidentity.AbstractBase;
+import com.pingidentity.pages.AdminTask.MilkAdminTaskPage;
 import com.pingidentity.pages.MilkHomePage;
 import com.pingidentity.pages.MilkLoginPage;
-import com.pingidentity.task.pages.AdminTask.MilkAdminTaskPage;
-import com.pingidentity.task.pages.ManageTask.MilkManageTaskPage;
-import com.pingidentity.task.pages.ScheduleTask.MilkScheduleTaskPage;
-
-import junit.framework.Assert;
+import com.pingidentity.pages.ScheduleTask.MilkScheduleTaskPage;
 
 public class UserActionCase extends AbstractBase {
 

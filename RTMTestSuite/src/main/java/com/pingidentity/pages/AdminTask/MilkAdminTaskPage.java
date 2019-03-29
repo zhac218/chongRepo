@@ -1,17 +1,13 @@
-package com.pingidentity.task.pages.AdminTask;
+package com.pingidentity.pages.AdminTask;
 
 import com.pingidentity.wait.DynamicWait;
-import com.pingidentity.config.ConfigProperties;
 import com.pingidentity.pages.AbstractSynchronousPage;
-import com.pingidentity.task.pages.DetailTask.MilkDetailTaskPage;
-import com.pingidentity.task.pages.ManageTask.MilkManageTaskPage;
-import com.pingidentity.task.pages.ScheduleTask.MilkScheduleTaskPage;
+import com.pingidentity.pages.DetailTask.MilkDetailTaskPage;
+import com.pingidentity.pages.ManageTask.MilkManageTaskPage;
+import com.pingidentity.pages.ScheduleTask.MilkScheduleTaskPage;
 
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.By;
 
 public class MilkAdminTaskPage extends AbstractSynchronousPage {
 	

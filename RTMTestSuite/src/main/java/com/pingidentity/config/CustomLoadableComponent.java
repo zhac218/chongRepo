@@ -1,5 +1,6 @@
 package com.pingidentity.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -8,6 +9,7 @@ import com.pingidentity.AbstractBase;
 
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public abstract class CustomLoadableComponent <T extends CustomLoadableComponent<T>> extends AbstractBase {
 	
 	private static final int LOAD_TIMEOUT = 30;
@@ -20,7 +22,7 @@ public abstract class CustomLoadableComponent <T extends CustomLoadableComponent
             return (T) this;
         } catch (Error e) {
             // This is the extra line of code
-            System.out.println("Error encountered during page load: " + e.getMessage());
+            log.info("Error encountered during page load: " + e.getMessage());
             load();
         }
 

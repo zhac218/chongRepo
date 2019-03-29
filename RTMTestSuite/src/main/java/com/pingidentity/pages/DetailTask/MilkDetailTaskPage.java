@@ -1,4 +1,4 @@
-package com.pingidentity.task.pages.DetailTask;
+package com.pingidentity.pages.DetailTask;
 import com.pingidentity.pages.AbstractBasePage;
 import com.pingidentity.wait.DynamicWait;
 

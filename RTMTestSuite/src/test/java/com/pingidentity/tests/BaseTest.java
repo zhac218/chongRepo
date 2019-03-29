@@ -1,32 +1,26 @@
 package com.pingidentity.tests;
 
-import org.openqa.selenium.WebDriver;
-
-import org.junit.Test;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.After;
-import org.junit.AfterClass;
 
 import com.pingidentity.AbstractBase;
 import com.pingidentity.config.ConfigProperties;
 import com.pingidentity.config.SeleniumDriver;
 
-import com.pingidentity.pages.MilkHomePage;
-import com.pingidentity.pages.MilkLoginPage;
-
+@Slf4j
 public abstract class BaseTest extends AbstractBase {
-
 	@Before
     public void executeBeforeClass() {
-        System.out.println("@Before: executed Before Class");
-        SeleniumDriver.getInstance().startDriver(ConfigProperties.getInstance().getBrowser());
+		log.info("@Before: executed Before Class");
+		boolean maximize = false;
+        SeleniumDriver.getInstance().startDriver(ConfigProperties.getInstance().getBrowser(), maximize);
 		getDriver().get(ConfigProperties.getInstance().getBaseUrl());
     }
 	
 	@After
 	public void executeAfterClass() {
-		System.out.println("@After: executed After Class");
+		log.info("@After: executed After Class");
 		SeleniumDriver.getInstance().cleanSeleniumSession();
 		getDriver().quit();
 	}	

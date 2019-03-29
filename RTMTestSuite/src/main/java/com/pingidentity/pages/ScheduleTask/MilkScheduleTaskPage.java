@@ -1,4 +1,4 @@
-package com.pingidentity.task.pages.ScheduleTask;
+package com.pingidentity.pages.ScheduleTask;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

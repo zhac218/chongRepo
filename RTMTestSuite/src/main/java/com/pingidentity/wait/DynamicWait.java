@@ -1,6 +1,8 @@
 package com.pingidentity.wait;
 
 import java.util.List;
+
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 
@@ -16,6 +18,7 @@ import org.openqa.selenium.WebDriverException;
 
 import com.pingidentity.wait.customwait.CustomConditions;
 
+@Slf4j
 public class DynamicWait {
 	private WebDriver driver;
 	private static final int GLOABL_WAIT_TIME = 20;
@@ -46,9 +49,9 @@ public class DynamicWait {
 		if (isAlertPresent(1)) {
 			Alert alert = this.driver.switchTo().alert();
 			alert.accept();
-			System.out.println("Alert Present and Accept");
+			log.info("Alert Present and Accept");
 		} else {
-			System.out.println("No Alert");
+			log.info("No Alert");
 		}
 		
 	}

@@ -24,27 +24,31 @@ public class SeleniumDriver {
     }
     
     public void startDriver(String browser) {
-        try {
-          DesiredCapabilities cap = new DesiredCapabilities();
-          cap.setBrowserName(browser);
-          
-          if (browser.equals("firefox")) { 
-        	  this.browserCapabilities = DesiredCapabilities.firefox();
-              FirefoxProfile customProfile = new FirefoxProfile();
-              customProfile.setPreference("dom.disable_beforeunload", true);
-              driver.set(new FirefoxDriver(this.browserCapabilities));
-
-          } else if (browser.equals("chrome")) {
-          	  WebDriverManager.chromedriver().setup();
-              this.browserCapabilities = DesiredCapabilities.chrome();             
-              driver.set(new ChromeDriver(this.browserCapabilities));
-         
-            }
-         driver.get().manage().window().maximize(); 
-        } catch (Exception e) {
-        	e.printStackTrace();
-          }
+        startDriver(browser, true);
      }
+
+    public void startDriver(String browser, boolean maximize) {
+        try {
+            DesiredCapabilities cap = new DesiredCapabilities();
+            cap.setBrowserName(browser);
+
+            if (browser.equals("firefox")) {
+                this.browserCapabilities = DesiredCapabilities.firefox();
+                FirefoxProfile customProfile = new FirefoxProfile();
+                customProfile.setPreference("dom.disable_beforeunload", true);
+                driver.set(new FirefoxDriver(this.browserCapabilities));
+
+            } else if (browser.equals("chrome")) {
+                WebDriverManager.chromedriver().setup();
+                this.browserCapabilities = DesiredCapabilities.chrome();
+                driver.set(new ChromeDriver(this.browserCapabilities));
+
+            }
+            if (maximize) driver.get().manage().window().maximize();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 	
     public void cleanSeleniumSession() {
         try {

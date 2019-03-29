@@ -1,12 +1,11 @@
 package com.pingidentity.pages;
 
+import com.pingidentity.pages.AdminTask.MilkAdminTaskPage;
 import org.openqa.selenium.support.FindBy;
 
 import com.pingidentity.config.ConfigProperties;
-import com.pingidentity.task.pages.AdminTask.MilkAdminTaskPage;
 import com.pingidentity.wait.DynamicWait;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class MilkLoginPage extends AbstractBasePage {
@@ -46,7 +45,7 @@ public class MilkLoginPage extends AbstractBasePage {
 		txtBoxPassword.sendKeys(password);
 	}
 	
-	public MilkAdminTaskPage goToTaskPage() {			
+	public MilkAdminTaskPage goToTaskPage() {
 		
 		getDynamicWait().presenceOfElementLocatedByID(loginLocator);
 		getDynamicWait().waitForElementToBeClickable(btnLogin);

@@ -1,14 +1,32 @@
-package com.pingidentity.task.pages.ManageTask;
+package com.pingidentity.pages.ManageTask;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.*;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.Rectangle;
+import org.openqa.selenium.interactions.Actions;
+
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
 
 import com.pingidentity.pages.AbstractBasePage;
 import com.pingidentity.wait.DynamicWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.concurrent.TimeUnit;
+
+@Slf4j
 public class MilkManageTaskPage extends AbstractBasePage {
 	
 	private static final String taskInputLocator=".b-Qn-sm-Xs-Ys";
@@ -66,18 +84,83 @@ public class MilkManageTaskPage extends AbstractBasePage {
 		getCustomClick().customizedClickElement(getDriver(), btnTask, taskButtonLocator);	
 	}
 
+	public WebElement findElement(By by) {
+		WebElement elem = driver.findElement(by);
+		// draw a border around the found element
+		if (driver instanceof JavascriptExecutor) {
+			((JavascriptExecutor)driver).executeScript("arguments[0].style.border='3px solid red'", elem);
+		}
+		return elem;
+	}
+
+	public WebElement findElement(By by, int xOffSet, int yOffSet) throws IOException {
+		WebElement ele = driver.findElement(by);
+
+		TakesScreenshot scrShot =((TakesScreenshot)driver);
+		File screenshotAs = scrShot.getScreenshotAs(OutputType.FILE);
+
+		// Get entire page screenshot
+		File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		BufferedImage fullImg = ImageIO.read(screenshot);
+
+		// Get the location of element on the page
+		Point point = ele.getLocation();
+
+		// Get width and height of the element
+		int eleWidth = ele.getSize().getWidth();
+		int eleHeight = ele.getSize().getHeight();
+
+		// Crop the entire page screenshot to get only element screenshot
+		BufferedImage eleScreenShot= fullImg.getSubimage(point.getX(), point.getY(),
+				eleWidth, eleHeight);
+
+		Graphics2D g = (Graphics2D) eleScreenShot.getGraphics();
+		g.setStroke(new BasicStroke(3));
+		g.setColor(Color.BLUE);
+		g.drawOval(eleWidth/2 + xOffSet, eleHeight/2 + yOffSet, 2, 2);
+//		g.drawRect(10, 10, eleScreenShot.getWidth() - 20, eleScreenShot.getHeight() - 20);
+
+
+		ImageIO.write(eleScreenShot, "png", screenshot);
+
+
+		Path path = Paths.get(System.getProperty("user.dir"), RandomStringUtils.randomAlphabetic(5) + ".png");
+
+		// Copy the element screenshot to disk
+		File screenshotLocation = new File(path.toAbsolutePath().toString());
+		FileUtils.copyFile(screenshot, screenshotLocation);
+
+		// draw a border around the found element
+		if (driver instanceof JavascriptExecutor) {
+			((JavascriptExecutor)driver).executeScript("arguments[0].style.border='3px solid red'", ele);
+		}
+		return ele;
+	}
+
 	// Dynamic Checkbox:
-	public Boolean selectCheckBox(String currTask) {
-		Boolean selected=null;
-		String currTaskChkBoxLocator = "//div[@class='b-fb-an-Gj b-fb-an-Nn']/span[@class='b-fb-an-Oj' and text()='"+currTask+ "']/parent::div/preceding-sibling::div[5]/span";
-						
-		WebElement currTaskChkBox = getDriver().findElement(By.xpath(currTaskChkBoxLocator));
-					
+	public Boolean selectCheckBox(String currTask) throws IOException, InterruptedException {
+		Boolean selected = false;
+		By locator = By.xpath("//*[@class='b-fn-Dn']//*[@aria-label='Select']");
+
+		WebElement currTaskChkBox = findElement(locator, 10, 5);
+		getDynamicWait().waitForElementToBeClickable(currTaskChkBox);
+
+		Actions builder = new Actions(getDriver());
+		builder.moveToElement(currTaskChkBox, 10, 5)
+				.click()
+				.build()
+				.perform();
+
+		Thread.sleep(2000); // replace with wait
+		WebElement due_today = driver.findElement(By.xpath("//*[contains(text(), 'Due Today')]"));
+
+		due_today.click();
+
 		if (isCurrentCheckBoxSelected(currTask)) {
-			System.out.println("Selectd Checkbox - no need to select the checkbox!");
+			log.info("Selectd Checkbox - no need to select the checkbox!");
 			selected = true;
 		} else if (isCurrentCheckBoxUnSelected(currTask)) {
-			System.out.println("Unselectd Checkbox - need to select the checkbox!");
+			log.info("Unselectd Checkbox - need to select the checkbox!");
 			getDynamicWait().waitUntilElementWasClicked(currTaskChkBox);
 			selected = false;
 		}
@@ -103,9 +186,9 @@ public class MilkManageTaskPage extends AbstractBasePage {
 		
 		try {
 			numOfCheckedBox = getDriver().findElements(By.xpath(chkBoxSelectedLocator)).size();
-			System.out.println("Number of already selected checkbox: "+numOfCheckedBox);
+			log.info("Number of already selected checkbox: "+numOfCheckedBox);
 		} catch (NoSuchElementException noExe) {
-			System.out.println("None of selected checkbox: "+numOfCheckedBox);
+			log.info("None of selected checkbox: "+numOfCheckedBox);
 		}
 		
 		return numOfCheckedBox;
@@ -113,11 +196,11 @@ public class MilkManageTaskPage extends AbstractBasePage {
 	
 	public void selectNoneCheckbox() {
 		if (isCheckboxSelected()) {
-			System.out.println("Checkbox is already selected.  Select none.");
+			log.info("Checkbox is already selected.  Select none.");
 			selectButtonSelectTask();
 			selectNone();
 		} else {
-			System.out.println("None of Checkbox is selected.");
+			log.info("None of Checkbox is selected.");
 		}
 		waitForNoSelectedCheckBox(0);
 	}
@@ -133,10 +216,10 @@ public class MilkManageTaskPage extends AbstractBasePage {
 		try {
 			getDriver().findElement(By.xpath(currTaskChkBoxLocator));
 			selected =true;
-			System.out.println("Checkbox was selected already.");
+			log.info("Checkbox was selected already.");
 		}
 		catch (NoSuchElementException noExe) {
-			System.out.println("Not Selected Checkbox.");
+			log.info("Not Selected Checkbox.");
 			selected = false;
 		} catch (TimeoutException timeoutExe) {
 			selected = false;
@@ -155,7 +238,7 @@ public class MilkManageTaskPage extends AbstractBasePage {
 		try {
 			getDriver().findElement(By.xpath(currTaskChkBoxLocator));
 			unselected =true;
-			System.out.println("Checkbox was unselected!");
+			log.info("Checkbox was unselected!");
 		}
 		catch (NoSuchElementException noExe) {
 			unselected = false;
@@ -190,10 +273,10 @@ public class MilkManageTaskPage extends AbstractBasePage {
 		
 		try {		
 			getDriver().findElement(By.xpath("//div[@class='b-fb-an-Gj b-fb-an-Nn']/span[@class='b-fb-an-Oj' and text()='"+currTask+ "']"));
-			System.out.println("Found Element");
+			log.info("Found Element");
 			taskExist= true;
 		} catch (NoSuchElementException noElement) {
-			System.out.println("No Longer exist");
+			log.info("No Longer exist");
 			taskExist = false;
 		}
 		return taskExist;
@@ -232,12 +315,12 @@ public class MilkManageTaskPage extends AbstractBasePage {
 	
 	public void waitForNoSelectedCheckBox(int finalTotal) {
 		int calculatedNum = getDynamicWait().waitUntilNumberOfElementsByXPath(getSelectedCheckboxSelector(), finalTotal).size();
-		System.out.println("After Calculation: "+calculatedNum);
+		log.info("After Calculation: "+calculatedNum);
 	}
 	
 	public void waitForNumberofElements(int finalTotal) {
 		int calculatedNum = getDynamicWait().waitUntilNumberOfElementsByCSS(taskTextLocator, finalTotal).size();
-		System.out.println("After Calculation: "+calculatedNum);
+		log.info("After Calculation: "+calculatedNum);
 	}
 	
 	@Override

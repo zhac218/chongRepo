@@ -7,11 +7,13 @@ import com.pingidentity.AbstractBase;
 import com.pingidentity.config.CustomLoadableComponent;
 
 public abstract class AbstractBasePage extends CustomLoadableComponent {
+	protected WebDriver driver;
 
 	protected int TIMEOUT = 20;
 	
 	public AbstractBasePage() {
-		PageFactory.initElements(getDriver(), this);	
+		this.driver = getDriver();
+		PageFactory.initElements(this.driver, this);
 	}
 	
 	
