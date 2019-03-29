@@ -72,7 +72,10 @@ public class SmokeTest extends BaseTest {
 			MilkScheduleTaskPage scheduleTaskPage = userActionCase.userSelectInbox();
 			
 			MilkManageTaskPage manageTaskPage = new MilkManageTaskPage();
-			//manageTaskPage.selectNoneCheckbox();
+			//getStaticWait().waitForMilliSeconds(5500);
+			//manageTaskPage.selectButtonSelectTask();
+			manageTaskPage.selectNoneCheckbox();
+			//getStaticWait().waitForMilliSeconds(5500);
 			
 			manageTaskPage.selectCheckBox(TESTDATA);
 			manageTaskPage.selectDueTask();
@@ -99,7 +102,7 @@ public class SmokeTest extends BaseTest {
 			
 			int numTaskFirst = manageTaskPage.numOfTask();
 			System.out.println("Num of Task at the beginning: "+numTaskFirst);
-			//manageTaskPage.selectNoneCheckbox();
+			manageTaskPage.selectNoneCheckbox();
 			
 			manageTaskPage.selectCheckBox(TESTDATA);
 			manageTaskPage.selectMoreTask();

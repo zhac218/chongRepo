@@ -115,7 +115,7 @@ public class MilkManageTaskPage extends AbstractBasePage {
 		if (isCheckboxSelected()) {
 			System.out.println("Checkbox is already selected.  Select none.");
 			selectButtonSelectTask();
-			selectNone();
+			//selectNone();
 		} else {
 			System.out.println("None of Checkbox is selected.");
 		}
@@ -260,9 +260,9 @@ public class MilkManageTaskPage extends AbstractBasePage {
 		getDynamicWait().isElementIsClickable(By.xpath(markTodayLocator), TIMEOUT);		
 		
 		// Select: 
-//		getDynamicWait().isElementPresent(By.xpath(taskSelectLocator), TIMEOUT);
-//		getDynamicWait().isElementIsVisible(By.xpath(taskSelectLocator), TIMEOUT);
-//		getDynamicWait().isElementIsClickable(By.xpath(taskSelectLocator), TIMEOUT);
+		getDynamicWait().isElementPresent(By.xpath(taskSelectLocator), TIMEOUT);
+		getDynamicWait().isElementIsVisible(By.xpath(taskSelectLocator), TIMEOUT);
+		getDynamicWait().isElementIsClickable(By.xpath(taskSelectLocator), TIMEOUT);
 //				
 //		// None: 
 //		getDynamicWait().isElementPresent(By.xpath(markNoneLocator), TIMEOUT);
